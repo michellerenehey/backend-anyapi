@@ -28,4 +28,10 @@ describe('AnyAPI routes', () => {
     const res = await request(app).get('/api/v1/flowers');
     expect(res.body).toEqual(expected);
   });
+
+  it('gets a flower by id', async () => {
+    const expected = await Flower.findById(1);
+    const res = await request(app).get(`/api/v1/flowers/${expected.id}`);
+    expect(res.body).toEqual({ ...expected });
+  });
 });
