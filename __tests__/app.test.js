@@ -34,4 +34,11 @@ describe('AnyAPI routes', () => {
     const res = await request(app).get(`/api/v1/flowers/${expected.id}`);
     expect(res.body).toEqual({ ...expected });
   });
+
+  it('returns 404 for flower not found', async () => {
+    const res = await request(app).get(
+      '/api/v1/flowers/fake-id-does-not-exist'
+    );
+    expect(res.status).toEqual(404);
+  });
 });
