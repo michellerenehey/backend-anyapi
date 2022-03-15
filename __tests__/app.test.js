@@ -41,4 +41,16 @@ describe('AnyAPI routes', () => {
     );
     expect(res.status).toEqual(404);
   });
+
+  it('updates a flower by id', async () => {
+    const expected = {
+      id: expect.any(String),
+      name: 'iris',
+      color: 'purple',
+    };
+    const res = await request(app)
+      .patch('/api/v1/flowers/1')
+      .send({ color: 'purple' });
+    expect(res.body).toEqual(expected);
+  });
 });
