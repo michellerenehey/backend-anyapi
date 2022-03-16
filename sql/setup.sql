@@ -9,4 +9,5 @@ CREATE TABLE flowers (
 INSERT INTO 
     flowers (name, color) 
 VALUES
-    ('iris', 'blue')
+    ('iris', 'blue');
+

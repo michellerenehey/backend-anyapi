@@ -53,4 +53,10 @@ describe('AnyAPI routes', () => {
       .send({ color: 'purple' });
     expect(res.body).toEqual(expected);
   });
+
+  it('deletes a flower by id', async () => {
+    const expected = await Flower.findById(1);
+    const res = await request(app).delete(`/api/v1/flowers/${expected.id}`);
+    expect(res.body).toEqual(expected);
+  });
 });
