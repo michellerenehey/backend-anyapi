@@ -3,7 +3,6 @@ const setup = require('../data/setup');
 const request = require('supertest');
 const app = require('../lib/app');
 const Flower = require('../lib/models/Flower');
-// const flowers = require('../lib/controllers/flowers');
 
 describe('AnyAPI routes', () => {
   beforeEach(() => {
