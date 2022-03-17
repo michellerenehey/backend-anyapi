@@ -15,15 +15,22 @@ describe('AnyAPI routes', () => {
 
   it('creates a flower', async () => {
     const expected = {
-      name: 'iris',
-      color: 'blue',
+      name: 'dandelion',
+      color: 'yellow',
     };
     const res = await request(app).post('/api/v1/flowers').send(expected);
     expect(res.body).toEqual({ id: expect.any(String), ...expected });
   });
 
   it('gets a list of flowers', async () => {
-    const expected = await Flower.findAll();
+    await Flower.insert({
+      name: 'dandelion',
+      color: 'yellow',
+    });
+    const expected = [
+      { id: '1', name: 'iris', color: 'blue' },
+      { id: '2', name: 'dandelion', color: 'yellow' },
+    ];
     const res = await request(app).get('/api/v1/flowers');
     expect(res.body).toEqual(expected);
   });
