@@ -3,6 +3,7 @@ const setup = require('../data/setup');
 const request = require('supertest');
 const app = require('../lib/app');
 const Flower = require('../lib/models/Flower');
+const err = require('../lib/middleware/error');
 
 describe('AnyAPI routes', () => {
   beforeEach(() => {
@@ -42,9 +43,7 @@ describe('AnyAPI routes', () => {
   });
 
   it('returns 404 for flower not found', async () => {
-    const res = await request(app).get(
-      '/api/v1/flowers/fake-id-does-not-exist'
-    );
+    const res = await request(app).get('/api/v1/flowers/111');
     expect(res.status).toEqual(404);
   });
 
