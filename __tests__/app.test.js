@@ -3,6 +3,7 @@ const setup = require('../data/setup');
 const request = require('supertest');
 const app = require('../lib/app');
 const Flower = require('../lib/models/Flower');
+const err = require('../lib/middleware/error');
 
 describe('AnyAPI routes', () => {
   beforeEach(() => {
@@ -15,15 +16,22 @@ describe('AnyAPI routes', () => {
 
   it('creates a flower', async () => {
     const expected = {
-      name: 'iris',
-      color: 'blue',
+      name: 'dandelion',
+      color: 'yellow',
     };
     const res = await request(app).post('/api/v1/flowers').send(expected);
     expect(res.body).toEqual({ id: expect.any(String), ...expected });
   });
 
   it('gets a list of flowers', async () => {
-    const expected = await Flower.findAll();
+    await Flower.insert({
+      name: 'dandelion',
+      color: 'yellow',
+    });
+    const expected = [
+      { id: '1', name: 'iris', color: 'blue' },
+      { id: '2', name: 'dandelion', color: 'yellow' },
+    ];
     const res = await request(app).get('/api/v1/flowers');
     expect(res.body).toEqual(expected);
   });
@@ -35,9 +43,7 @@ describe('AnyAPI routes', () => {
   });
 
   it('returns 404 for flower not found', async () => {
-    const res = await request(app).get(
-      '/api/v1/flowers/fake-id-does-not-exist'
-    );
+    const res = await request(app).get('/api/v1/flowers/111');
     expect(res.status).toEqual(404);
   });
 
